@@ -3,11 +3,12 @@ import express from "express";
 import http from "http";
 import next from "next";
 
+const dev = process.env.NODE_ENV !== "production";
+const nextApp = next({ dev }); // Next.js 앱 초기화
+const handle = nextApp.getRequestHandler(); // Next.js 요청 핸들러
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
-const nextApp = next({ dev }); //Next.js 앱을 준비함
-const handle = nextApp.getRequestHandler(); // Next.js 요청 핸들러
 
 const io = new Server(server, {
   cors: {
@@ -15,13 +16,8 @@ const io = new Server(server, {
   },
 });
 
-server.listen(PORT, () => {
-  console.log(`서버와 연결되었습니다. 포트: ${PORT}`);
-});
-
-//Next.js 요청 핸들러 설정
 nextApp.prepare().then(() => {
-  // Next.js의 요청 핸들러를 모든 라우트에 적용
+  // Next.js 요청 핸들러 설정
   app.all("*", (req, res) => {
     return handle(req, res);
   });
@@ -55,5 +51,10 @@ nextApp.prepare().then(() => {
         message: msg.message,
       });
     });
+  });
+
+  // 서버 시작
+  server.listen(PORT, () => {
+    console.log(`서버와 연결되었습니다. 포트: ${PORT}`);
   });
 });
