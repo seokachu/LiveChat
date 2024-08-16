@@ -12,7 +12,7 @@ const Main = () => {
 
   //NOTE - 소켓 연결 함수
   const connectToChatServer = () => {
-    const serverUrl = "http://localhost:4000";
+    const serverUrl = "https://livechat-cd66.onrender.com";
     const _socket = io(serverUrl, {
       autoConnect: false,
       query: {
