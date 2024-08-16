@@ -16,7 +16,7 @@ server.listen(PORT, () => {
   console.log(`서버와 연결되었습니다. 포트: ${PORT}`);
 });
 
-app.get("/", (_, res) => res.send("api"));
+app.get("/api", (_, res) => res.send("api"));
 app.get("/message", (_, res) => res.send("express"));
 
 io.on("connection", (client) => {
