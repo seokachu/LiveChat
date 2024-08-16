@@ -4,6 +4,7 @@ import http from "http";
 
 const app = express();
 const server = http.createServer(app);
+const PORT = process.env.PORT || 4000;
 
 const io = new Server(server, {
   cors: {
@@ -11,10 +12,11 @@ const io = new Server(server, {
   },
 });
 
-server.listen(4000, () => {
-  console.log("서버와 연결되었습니다.");
+server.listen(PORT, () => {
+  console.log(`서버와 연결되었습니다. 포트: ${PORT}`);
 });
 
+app.get("/", (_, res) => res.send("api"));
 app.get("/message", (_, res) => res.send("express"));
 
 io.on("connection", (client) => {
