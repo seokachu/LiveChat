@@ -12,8 +12,8 @@ const Main = () => {
 
   //NOTE - 소켓 연결 함수
   const connectToChatServer = () => {
-    const serverUrl = "https://livechat-cd66.onrender.com";
-    const _socket = io(serverUrl, {
+    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+    const _socket = io(serverUrl!, {
       autoConnect: false,
       query: {
         username,
@@ -26,6 +26,7 @@ const Main = () => {
   const disConnectToChatServer = () => {
     console.log("사용자가 나갔습니다.");
     socket?.disconnect();
+    setUserName("");
   };
 
   //NOTE - 접속중, 미접속 표시
@@ -42,6 +43,7 @@ const Main = () => {
   //NOTE - 메세지 전송
   const sendMessageToChatServer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setUserInput("");
     socket?.emit(
       "message",
       { username, message: userInput },
@@ -79,27 +81,39 @@ const Main = () => {
 
   return (
     <div>
-      <h1>유저 : {username}</h1>
-      <h2>현재 접속 상태 : {isConnected ? "접속중" : "미접속"}</h2>
-      <input value={username} onChange={(e) => setUserName(e.target.value)} />
-      <button
-        onClick={() => {
-          connectToChatServer();
-        }}
-      >
-        접속
-      </button>
-      <button
-        onClick={() => {
-          disConnectToChatServer();
-        }}
-      >
-        접속종료
-      </button>
+      <h1>내 닉네임 : {username}</h1>
+      <h2>현재 접속 상태 : {isConnected ? "입장" : "미입장"}</h2>
+
+      {isConnected ? (
+        <button
+          onClick={() => {
+            disConnectToChatServer();
+          }}
+        >
+          접속종료
+        </button>
+      ) : (
+        <>
+          <input
+            value={username}
+            placeholder="닉네임을 입력해 주세요."
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              connectToChatServer();
+            }}
+          >
+            접속
+          </button>
+        </>
+      )}
+
       <ul>{messageList}</ul>
       <form onSubmit={sendMessageToChatServer}>
         <input
           value={userInput}
+          placeholder="내용을 입력해 주세요."
           onChange={(e) => setUserInput(e.target.value)}
         />
         <button>보내기</button>

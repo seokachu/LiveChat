@@ -8,7 +8,7 @@ const nextApp = next({ dev }); // Next.js 앱 초기화
 const handle = nextApp.getRequestHandler(); // Next.js 요청 핸들러
 const app = express();
 const server = http.createServer(app);
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 
 const io = new Server(server, {
   cors: {
