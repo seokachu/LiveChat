@@ -12,7 +12,9 @@ const Main = () => {
 
   //NOTE - 소켓 연결 함수
   const connectToChatServer = () => {
-    const _socket = io("http://localhost:4000", {
+    const serverUrl =
+      process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4000";
+    const _socket = io(serverUrl, {
       autoConnect: false,
       query: {
         username,
