@@ -1,16 +1,6 @@
+import { ConnectState } from "@/types";
 import { Socket } from "socket.io-client";
 import { create } from "zustand";
-
-interface ConnectState {
-  nickname: string;
-  socket: Socket | null;
-  isConnect: boolean;
-  actions: {
-    setNickname: (nickname: string) => void;
-    setSocket: (socket: Socket | null) => void;
-    setIsConnect: (isConnect: boolean) => void;
-  };
-}
 
 const useConnectStore = create<ConnectState>((set) => ({
   nickname: "",
