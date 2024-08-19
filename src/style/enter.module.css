@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: var(--global-color);
   border-radius: 8px;
 }
 
