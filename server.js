@@ -29,7 +29,7 @@ nextApp.prepare().then(() => {
     // 전체 메세지
     client.broadcast.emit("message", {
       username: "",
-      message: `${connectedClientUserName} 님이 방에 들어왔습니다.`,
+      message: `${connectedClientUserName} 님이 들어왔습니다.`,
     });
 
     // 사용자가 나갔을 때
