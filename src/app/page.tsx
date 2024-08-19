@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className={Style.container}>
       <main className={S.main}>
-        <h1 className="gamjaFlowerRegular">seokachu's Chat</h1>
+        <h1 className="gamjaFlowerRegular">seokachu&apos;s Chat</h1>
         <form onSubmit={connectToChatServer}>
           <label htmlFor="nickname">닉네임을 입력하고 입장해 주세요!</label>
           <input

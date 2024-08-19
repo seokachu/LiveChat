@@ -7,7 +7,7 @@ import {
 } from "@/store/connect-store";
 import { Messages } from "@/types";
 import renderMessageList from "@/utils/ChatListItem";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import S from "@/style/main.module.css";
 import { toast } from "react-toastify";
 
@@ -19,15 +19,21 @@ const Main = () => {
   const socket = useSocket();
 
   //NOTE - 접속중, 미접속 표시
-  const onConnected = () => {
+  const onConnected = useCallback(() => {
     console.log("프론트 들어왔습니다.");
     setIsConnect(true);
-  };
+  }, [setIsConnect]);
 
-  const onDisConnected = () => {
+  const onDisConnected = useCallback(() => {
     console.log("프론트 나갔습니다");
     setIsConnect(false);
-  };
+  }, [setIsConnect]);
+
+  //NOTE - 실시간 message 리스트 보여주기
+  const onMessageReceived = useCallback((msg: Messages) => {
+    console.log("msg", msg);
+    setMessages((prev) => [...prev, msg]);
+  }, []);
 
   //NOTE - 메세지 전송
   const sendMessageToChatServer = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,12 +53,6 @@ const Main = () => {
     }
   };
 
-  //NOTE - 실시간 message 리스트 보여주기
-  const onMessageReceived = (msg: Messages) => {
-    console.log("msg", msg);
-    setMessages((prev) => [...prev, msg]);
-  };
-
   //NOTE - socket 정보 받아오기
   useEffect(() => {
     socket?.on("connect", onConnected);
@@ -64,7 +64,7 @@ const Main = () => {
       socket?.off("disconnect", onDisConnected);
       socket?.off("message", onMessageReceived);
     };
-  }, [socket]);
+  }, [socket, onConnected, onDisConnected, onMessageReceived]);
 
   useEffect(() => {
     window.scrollTo({
