@@ -77,7 +77,7 @@ const Main = () => {
   return (
     <div className={S.mainWrapper}>
       <main className={S.main}>
-        <ul>{renderMessageList(messages)}</ul>
+        <ul>{renderMessageList(messages, nickname)}</ul>
         <form onSubmit={sendMessageToChatServer}>
           <input
             value={userInput}

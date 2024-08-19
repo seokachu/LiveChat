@@ -20,7 +20,7 @@ button {
   color: #7d7d7d;
   padding: 10px 15px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #353535;
 }
 
 button:hover {

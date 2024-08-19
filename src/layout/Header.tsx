@@ -36,7 +36,7 @@ const Header = () => {
             disConnectToChatServer();
           }}
         >
-          접속종료
+          나가기
         </button>
       </header>
     </div>
