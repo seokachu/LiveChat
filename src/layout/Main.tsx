@@ -1,27 +1,12 @@
 "use client";
 import { Messages } from "@/types";
 import React, { useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
 
 const Main = () => {
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [username, setUserName] = useState("");
+  // const [username, setUserName] = useState("");
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState<Messages[]>([]);
-
-  //NOTE - 소켓 연결 함수
-  const connectToChatServer = () => {
-    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-    const _socket = io(serverUrl!, {
-      autoConnect: false,
-      query: {
-        username,
-      },
-    });
-    _socket.connect();
-    setSocket(_socket);
-  };
 
   const disConnectToChatServer = () => {
     console.log("사용자가 나갔습니다.");
