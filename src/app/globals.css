@@ -1,1 +1,30 @@
 @import "@/style/reset.css";
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap");
+
+:root {
+  --primary-color: #191919;
+  --secondary-color: #262626;
+  --orange: #ffa024;
+  --global-color: #fff;
+}
+
+.gamjaFlowerRegular {
+  font-family: "Gamja Flower", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+button {
+  cursor: pointer;
+  background-color: #353535;
+  color: #7d7d7d;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+}
+
+button:hover {
+  background-color: #fff;
+  color: var(--primary-color);
+  transition: 0.3s ease-out;
+}
