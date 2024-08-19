@@ -8,6 +8,8 @@ import {
 import { Messages } from "@/types";
 import renderMessageList from "@/utils/ChatListItem";
 import React, { useEffect, useState } from "react";
+import S from "@/style/main.module.css";
+import { toast } from "react-toastify";
 
 const Main = () => {
   const [userInput, setUserInput] = useState("");
@@ -30,14 +32,19 @@ const Main = () => {
   //NOTE - 메세지 전송
   const sendMessageToChatServer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUserInput("");
-    socket?.emit(
-      "message",
-      { username: nickname, message: userInput },
-      (msg: Messages) => {
-        console.log(msg);
-      }
-    );
+    if (!userInput.trim()) {
+      toast.error("내용을 입력해 주세요.");
+      return;
+    } else {
+      socket?.emit(
+        "message",
+        { username: nickname, message: userInput },
+        (msg: Messages) => {
+          console.log(msg);
+        }
+      );
+      setUserInput("");
+    }
   };
 
   //NOTE - 실시간 message 리스트 보여주기
@@ -59,18 +66,29 @@ const Main = () => {
     };
   }, [socket]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [messages]);
+
   return (
-    <main>
-      <ul>{renderMessageList(messages)}</ul>
-      <form onSubmit={sendMessageToChatServer}>
-        <input
-          value={userInput}
-          placeholder="내용을 입력해 주세요."
-          onChange={(e) => setUserInput(e.target.value)}
-        />
-        <button>보내기</button>
-      </form>
-    </main>
+    <div className={S.mainWrapper}>
+      <main className={S.main}>
+        <ul>{renderMessageList(messages)}</ul>
+        <form onSubmit={sendMessageToChatServer}>
+          <input
+            value={userInput}
+            placeholder="내용을 입력해 주세요."
+            onChange={(e) => setUserInput(e.target.value)}
+            autoFocus
+          />
+          <button>전송</button>
+        </form>
+      </main>
+    </div>
   );
 };
 
